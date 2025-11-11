@@ -21,15 +21,17 @@
     <div id="investment-info">
         <p>Current Investment Amount: <span id="currentInvestment">0</span></p>
         <p>Market Status: <span id="marketStatus">N/A</span></p>
-        <button id="resetDataBtn"><i class="fas fa-undo"></i> Reset Data</button>
-        <button id="exportBtn"><i class="fas fa-download"></i> Export to Excel</button>
+        <button id="resetDataBtn" title="Reset all data" aria-label="Reset all data"><i class="fas fa-undo"></i></button>
+        <button id="exportBtn" title="Export to Excel" aria-label="Export to Excel"><i class="fas fa-download"></i></button>
+
+        <!-- JSON Import/Export controls -->
+        <button id="exportJsonBtn" title="Export as JSON" aria-label="Export as JSON"><i class="fas fa-file-export"></i></button>
+        <button id="importJsonBtn" title="Import from JSON" aria-label="Import from JSON"><i class="fas fa-file-import"></i></button>
+        <input id="importJsonInput" type="file" accept=".json,application/json" style="display:none" />
     </div>
 
-    <div id="chart-container">
-        <h3>Investment History</h3>
-        <canvas id="investmentChart"></canvas>
-    </div>
-    
+    <!-- Investment History section removed -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="script.js"></script>
 

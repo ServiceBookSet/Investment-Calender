@@ -166,54 +166,75 @@ h1 {
     color: white;
 }
 
-#resetDataBtn {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 0px;
-}
-
-#resetDataBtn:hover {
-    background-color: #c82333;
-}
-
+/* Export/Import Buttons */
+#exportJsonBtn,
+#importJsonBtn,
+#resetDataBtn,
 #exportBtn {
-    background-color: #28a745;
-    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 6px;
+    color: #ffffff;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 0px;
+    transition: transform 80ms ease, filter 120ms ease, box-shadow 120ms ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
 }
 
-#exportBtn:hover {
-    background-color: #218838;
+/* Export (green) */
+#exportJsonBtn {
+    background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%);
 }
+#exportJsonBtn:hover { filter: brightness(0.95); transform: translateY(-1px); }
+#exportJsonBtn:active { transform: translateY(0); }
 
-#chart-container {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 350px;
-    margin-top: 20px;
+/* Import (blue) */
+#importJsonBtn {
+    background: linear-gradient(180deg, #3498db 0%, #2c82d1 100%);
+}
+#importJsonBtn:hover { filter: brightness(0.95); transform: translateY(-1px); }
+#importJsonBtn:active { transform: translateY(0); }
+
+/* Reset (red) */
+#resetDataBtn {
+    background: linear-gradient(180deg, #e74c3c 0%, #c0392b 100%);
+}
+#resetDataBtn:hover { filter: brightness(0.95); transform: translateY(-1px); }
+#resetDataBtn:active { transform: translateY(0); }
+
+/* Export to Excel (orange) */
+#exportBtn {
+    background: linear-gradient(180deg, #f39c12 0%, #d68910 100%);
+}
+#exportBtn:hover { filter: brightness(0.95); transform: translateY(-1px); }
+#exportBtn:active { transform: translateY(0); }
+
+/* Icon spacing & focus outline */
+#exportJsonBtn i,
+#importJsonBtn i,
+#resetDataBtn i,
+#exportBtn i {
+    width: 16px;
     text-align: center;
+    font-size: 14px;
+}
+#exportJsonBtn:focus,
+#importJsonBtn:focus,
+#resetDataBtn:focus,
+#exportBtn:focus {
+    outline: 3px solid rgba(66,133,244,0.24);
+    outline-offset: 2px;
 }
 
-#chart-container h3 {
-    margin-top: 0;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-#investmentChart {
-    max-height: 300px;
+/* Small-screen adjustments */
+@media (max-width: 480px) {
+    #exportJsonBtn, #importJsonBtn, #resetDataBtn, #exportBtn {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
 }
 
 /* Responsive Design */

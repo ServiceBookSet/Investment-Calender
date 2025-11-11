@@ -171,11 +171,12 @@ h1 {
 #importJsonBtn,
 #resetDataBtn,
 #exportBtn {
-    display: inline-flex;
+    /* display: inline-flex; */
+    margin-right: 10px;
     align-items: center;
     gap: 8px;
-    padding: 8px 12px;
-    font-size: 14px;
+    padding: 10px 20px;
+    font-size: 16px;
     border: none;
     border-radius: 6px;
     color: #ffffff;
@@ -280,3 +281,4 @@ h1 {
         font-size: 14px;
     }
 }
+

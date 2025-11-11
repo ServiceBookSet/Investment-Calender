@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Investment Calendar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Investing Calendar</h1>
+    <div id="calendar-container">
+        <div id="calendar-header">
+            <button id="prevMonth">&#9664;</button>
+            <h2 id="monthYear"></h2>
+            <button id="nextMonth">&#9654;</button>
+        </div>
+        <div id="calendar-grid"></div>
+    </div>
+    <div id="investment-info">
+        <p>Current Investment Amount: <span id="currentInvestment">0</span></p>
+        <p>Market Status: <span id="marketStatus">N/A</span></p>
+        <button id="resetDataBtn"><i class="fas fa-undo"></i> Reset Data</button>
+        <button id="exportBtn"><i class="fas fa-download"></i> Export to Excel</button>
+    </div>
+
+    <div id="chart-container">
+        <h3>Investment History</h3>
+        <canvas id="investmentChart"></canvas>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+
+    <!-- Market Status Dialog -->
+    <div id="marketStatusDialog" class="dialog-overlay">
+        <div class="dialog-content">
+            <h3 id="dialogDate"></h3>
+            <p>Did the market go up or fall?</p>
+            <button id="marketUpBtn">Up</button>
+            <button id="marketFallBtn">Fall</button>
+        </div>
+    </div>
+</body>
+</html>

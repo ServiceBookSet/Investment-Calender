@@ -369,6 +369,90 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    /* JSON Export / Import for full data portability */
+    function exportAppDataToJSON() {
+        const exportObj = {
+            exportedAt: new Date().toISOString(),
+            origin: location.href,
+            userAgent: navigator.userAgent,
+            localStorage: {}
+        };
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            exportObj.localStorage[key] = localStorage.getItem(key);
+        }
+        const blob = new Blob([JSON.stringify(exportObj, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const filename = `investment-data-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+    }
+
+    function importAppDataFromFile(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const parsed = JSON.parse(e.target.result);
+                if (!parsed || typeof parsed.localStorage !== 'object') {
+                    alert('Selected file is not a valid backup JSON.');
+                    return;
+                }
+                const overwrite = confirm('Overwrite existing keys from backup? OK = overwrite existing keys, Cancel = keep existing keys (merge).');
+                const clearAll = overwrite ? confirm('Also clear all existing localStorage before import? OK = clear all, Cancel = do not clear.') : false;
+                if (clearAll) localStorage.clear();
+                Object.entries(parsed.localStorage).forEach(([k, v]) => {
+                    if (overwrite) {
+                        localStorage.setItem(k, v);
+                    } else {
+                        if (localStorage.getItem(k) === null) {
+                            localStorage.setItem(k, v);
+                        }
+                    }
+                });
+                alert('Import complete. The app will reload to apply changes.');
+                // Try to call an in-app reload handler if available, otherwise reload the page
+                if (typeof loadAppData === 'function') {
+                    try { loadAppData(); } catch (_) { location.reload(); }
+                } else {
+                    location.reload();
+                }
+            } catch (err) {
+                alert('Failed to parse JSON: ' + (err && err.message ? err.message : String(err)));
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    const exportJsonBtn = document.getElementById('exportJsonBtn');
+    const importJsonBtn = document.getElementById('importJsonBtn');
+    const importJsonInput = document.getElementById('importJsonInput');
+
+    if (exportJsonBtn) {
+        exportJsonBtn.addEventListener('click', () => {
+            exportAppDataToJSON();
+        });
+    }
+
+    if (importJsonBtn && importJsonInput) {
+        importJsonBtn.addEventListener('click', () => importJsonInput.click());
+        importJsonInput.addEventListener('change', (ev) => {
+            const file = ev.target.files && ev.target.files[0];
+            if (!file) return;
+            const proceed = confirm(`Import data from "${file.name}"?`);
+            if (!proceed) {
+                importJsonInput.value = '';
+                return;
+            }
+            importAppDataFromFile(file);
+            importJsonInput.value = '';
+        });
+    }
+
     // Initial load
     loadInvestmentData();
     renderCalendar();

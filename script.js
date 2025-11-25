@@ -2,8 +2,8 @@
 
 // Check if user is logged in on page load
 function checkAuth() {
-    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-    const username = sessionStorage.getItem('username');
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const username = localStorage.getItem('username');
     
     if (isLoggedIn === 'true' && username) {
         showMainApp(username);
@@ -40,8 +40,8 @@ function handleLogin(event) {
     // Check against correct credentials
     if (username === 'Nitin' && password === 'Invest@310') {
         errorEl.style.display = 'none';
-        sessionStorage.setItem('isLoggedIn', 'true');
-        sessionStorage.setItem('username', username);
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('username', username);
         
         // Clear form
         document.getElementById('loginForm').reset();
@@ -57,10 +57,18 @@ function handleLogin(event) {
 function handleLogout() {
     const confirmLogout = confirm('Are you sure you want to logout?');
     if (confirmLogout) {
-        sessionStorage.removeItem('isLoggedIn');
-        sessionStorage.removeItem('username');
+        // Remove auth from localStorage so login is required next time
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('username');
+
+        // Hide main app and show only login screen
         showLoginPage();
-        document.getElementById('loginForm').reset();
+        // Clear displayed username if present
+        const displayUsernameEl = document.getElementById('displayUsername');
+        if (displayUsernameEl) displayUsernameEl.textContent = '';
+        // Reset login form for fresh input
+        const loginFormEl = document.getElementById('loginForm');
+        if (loginFormEl) loginFormEl.reset();
     }
 }
 

@@ -9,7 +9,44 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Investing Calendar</h1>
+    <!-- Login Page -->
+    <div id="loginPage" class="auth-page">
+        <div class="login-container">
+            <div class="login-box">
+                <h1><i class="fas fa-chart-line"></i> Investment Calendar</h1>
+                <p class="login-subtitle">Secure Investment Tracker</p>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username"><i class="fas fa-user"></i> Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password"><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+                
+                <div class="login-info">
+                    <p id="loginError" class="error-message" style="display: none;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application (Hidden until login) -->
+    <div id="mainApp" class="main-app" style="display: none;">
+        <div class="header-with-logout">
+            <h1>Investing Calendar</h1>
+            <button id="logoutBtn" class="logout-btn" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+        <div id="userInfo" class="user-info">
+            <span><i class="fas fa-user-circle"></i> Welcome, <strong id="displayUsername"></strong></span>
+        </div>
+        
     <div id="calendar-container">
         <div id="calendar-header">
             <button id="prevMonth">&#9664;</button>
@@ -43,6 +80,7 @@
             <button id="marketUpBtn">Up</button>
             <button id="marketFallBtn">Fall</button>
         </div>
+    </div>
     </div>
 </body>
 </html>

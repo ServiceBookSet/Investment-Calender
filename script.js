@@ -1,3 +1,71 @@
+// === AUTHENTICATION LOGIC ===
+
+// Check if user is logged in on page load
+function checkAuth() {
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    const username = sessionStorage.getItem('username');
+    
+    if (isLoggedIn === 'true' && username) {
+        showMainApp(username);
+    } else {
+        showLoginPage();
+    }
+}
+
+function showLoginPage() {
+    document.getElementById('loginPage').style.display = 'flex';
+    document.getElementById('mainApp').style.display = 'none';
+}
+
+function showMainApp(username) {
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('mainApp').style.display = 'block';
+    document.getElementById('displayUsername').textContent = username;
+}
+
+function handleLogin(event) {
+    event.preventDefault();
+    
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const errorEl = document.getElementById('loginError');
+    
+    // Validate credentials
+    if (!username || !password) {
+        errorEl.textContent = 'Username and password are required.';
+        errorEl.style.display = 'block';
+        return;
+    }
+    
+    // Check against correct credentials
+    if (username === 'Nitin' && password === 'Invest@310') {
+        errorEl.style.display = 'none';
+        sessionStorage.setItem('isLoggedIn', 'true');
+        sessionStorage.setItem('username', username);
+        
+        // Clear form
+        document.getElementById('loginForm').reset();
+        
+        // Show main app
+        showMainApp(username);
+    } else {
+        errorEl.textContent = 'Invalid username or password.';
+        errorEl.style.display = 'block';
+    }
+}
+
+function handleLogout() {
+    const confirmLogout = confirm('Are you sure you want to logout?');
+    if (confirmLogout) {
+        sessionStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('username');
+        showLoginPage();
+        document.getElementById('loginForm').reset();
+    }
+}
+
+// === ORIGINAL APPLICATION LOGIC ===
+
 // Remove these initial declarations
 // const calendarGrid = document.getElementById('calendar-grid');
 // const monthYearDisplay = document.getElementById('monthYear');
@@ -317,6 +385,9 @@ function updateInvestmentChart() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Check authentication first
+    checkAuth();
+    
     // Assign elements after DOM is loaded
     calendarGrid = document.getElementById('calendar-grid');
     monthYearDisplay = document.getElementById('monthYear');
@@ -332,6 +403,18 @@ document.addEventListener('DOMContentLoaded', () => {
     dialogDate = document.getElementById('dialogDate');
     marketUpBtn = document.getElementById('marketUpBtn');
     marketFallBtn = document.getElementById('marketFallBtn');
+
+    // Login/Logout event listeners
+    const loginForm = document.getElementById('loginForm');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
+    
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
+    }
 
     // Event listeners for prev/next month buttons
     prevMonthBtn.addEventListener('click', () => {
